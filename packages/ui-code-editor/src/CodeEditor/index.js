@@ -74,7 +74,8 @@ class CodeEditor extends Component {
     /**
      * the selected value (when controlled via the `onChange` prop)
      */
-    value: PropTypes.string
+    value: PropTypes.string,
+    editorDidMount: PropTypes.func
   }
 
   static defaultProps = {
@@ -85,7 +86,8 @@ class CodeEditor extends Component {
     },
     onChange: (value) => {},
     attachment: undefined,
-    value: undefined
+    value: undefined,
+    editorDidMount: (editor, value, next) => {}
   }
 
   constructor(props) {
@@ -139,6 +141,7 @@ class CodeEditor extends Component {
       readOnly,
       onChange,
       styles,
+      editorDidMount,
       ...rest
     } = this.props
 
@@ -155,6 +158,7 @@ class CodeEditor extends Component {
             onBeforeChange={(editor, data, value) => {
               onChange(value)
             }}
+            editorDidMount={editorDidMount}
             ref={(el) => {
               this.codeMirror = el
             }}

@@ -39,11 +39,19 @@ describe('<CodeEditor />', async () => {
 
   it('should behave controlled', async () => {
     const onChange = stub()
+    const editorDidMount = stub()
     const subject = await mount(
-      <CodeEditor label="foo" value="hello worl" onChange={onChange} />
+      <CodeEditor
+        label="foo"
+        value="hello worl"
+        onChange={onChange}
+        editorDidMount={editorDidMount}
+      />
     )
     const editor = await CodeEditorLocator.find()
     const input = await editor.findInput()
+
+    expect(editorDidMount).to.have.been.called()
 
     await input.typeIn('d')
     expect(onChange).to.have.been.calledWith('hello world')
